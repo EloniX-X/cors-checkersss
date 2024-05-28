@@ -1,0 +1,27 @@
+import requests
+
+ORIGIN = "my site or smth"
+
+def sendreq(URL):
+    try: 
+        r = requests.get(
+            URL,
+            headers={'Origin': ORIGIN}
+        )
+
+        if r.status_code == 200: 
+            print(r.text, "status code is accetped ")
+            f = open("exploit/acceptsex.txt", "a")
+            f.write(r.url + '\n')
+            f.close()
+    except:
+        print("fail")
+
+f = open("exploit/allowcreds.txt", "r+")
+access = f.read().replace("(", "")
+ace = access.split(')')
+for x in ace:        
+    fr = x.replace('\n', '').replace('"', '').split(',')
+    url = fr[0].replace("'", '')
+    # print(url)
+    sendreq(url)
